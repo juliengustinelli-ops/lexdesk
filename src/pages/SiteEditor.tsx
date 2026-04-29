@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { Globe, Send, Loader2, CheckCircle2, XCircle } from 'lucide-react'
+import { useSettings } from '../store/settings'
 
 const REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER
 const REPO_NAME = import.meta.env.VITE_GITHUB_REPO
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
-const OPENAI_KEY = import.meta.env.VITE_OPENAI_API_KEY
 
 const SITE_PATH_PREFIX = '05-lex-ai-frontend/code'
 
@@ -14,10 +13,10 @@ interface Message {
   status?: 'success' | 'error'
 }
 
-async function getFileList(): Promise<string[]> {
+async function getFileList(ghToken: string): Promise<string[]> {
   const res = await fetch(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`,
-    { headers: { Authorization: `Bearer ${GITHUB_TOKEN}` } }
+    { headers: { Authorization: `Bearer ${ghToken}` } }
   )
   const data = await res.json()
   return (data.tree as { path: string; type: string }[])
@@ -25,10 +24,10 @@ async function getFileList(): Promise<string[]> {
     .map(f => f.path.replace(`${SITE_PATH_PREFIX}/`, ''))
 }
 
-async function getFileContent(filePath: string): Promise<{ content: string; sha: string }> {
+async function getFileContent(filePath: string, ghToken: string): Promise<{ content: string; sha: string }> {
   const res = await fetch(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${SITE_PATH_PREFIX}/${filePath}`,
-    { headers: { Authorization: `Bearer ${GITHUB_TOKEN}` } }
+    { headers: { Authorization: `Bearer ${ghToken}` } }
   )
   const data = await res.json()
   return {
@@ -37,13 +36,13 @@ async function getFileContent(filePath: string): Promise<{ content: string; sha:
   }
 }
 
-async function commitFileChange(filePath: string, newContent: string, sha: string, message: string): Promise<void> {
+async function commitFileChange(filePath: string, newContent: string, sha: string, message: string, ghToken: string): Promise<void> {
   const res = await fetch(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${SITE_PATH_PREFIX}/${filePath}`,
     {
       method: 'PUT',
       headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Authorization: `Bearer ${ghToken}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -59,15 +58,15 @@ async function commitFileChange(filePath: string, newContent: string, sha: strin
   }
 }
 
-async function askAI(userRequest: string, fileList: string[]): Promise<{ file: string; instruction: string } | null> {
+async function askAI(userRequest: string, fileList: string[], aiKey: string, aiModel: string): Promise<{ file: string; instruction: string } | null> {
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${OPENAI_KEY}`,
+      Authorization: `Bearer ${aiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: aiModel,
       messages: [
         {
           role: 'system',
@@ -96,15 +95,15 @@ If the request is unclear or not a website edit request, respond with: {"error":
   }
 }
 
-async function applyEditWithAI(html: string, instruction: string): Promise<string> {
+async function applyEditWithAI(html: string, instruction: string, aiKey: string, aiModel: string): Promise<string> {
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${OPENAI_KEY}`,
+      Authorization: `Bearer ${aiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: aiModel,
       messages: [
         {
           role: 'system',
@@ -124,6 +123,7 @@ Apply the instruction to the HTML and return ONLY the complete modified HTML fil
 }
 
 export function SiteEditor() {
+  const { openaiKey, openaiModel, githubToken } = useSettings()
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -146,8 +146,8 @@ export function SiteEditor() {
     setLoading(true)
 
     try {
-      const fileList = await getFileList()
-      const plan = await askAI(text, fileList)
+      const fileList = await getFileList(githubToken)
+      const plan = await askAI(text, fileList, openaiKey, openaiModel)
 
       if (!plan) {
         setMessages(prev => [...prev, {
@@ -159,9 +159,9 @@ export function SiteEditor() {
       }
 
       const { file, instruction } = plan
-      const { content, sha } = await getFileContent(file)
-      const updatedHtml = await applyEditWithAI(content, instruction)
-      await commitFileChange(file, updatedHtml, sha, `LexDesk: ${text.slice(0, 72)}`)
+      const { content, sha } = await getFileContent(file, githubToken)
+      const updatedHtml = await applyEditWithAI(content, instruction, openaiKey, openaiModel)
+      await commitFileChange(file, updatedHtml, sha, `LexDesk: ${text.slice(0, 72)}`, githubToken)
 
       setMessages(prev => [...prev, {
         role: 'assistant',

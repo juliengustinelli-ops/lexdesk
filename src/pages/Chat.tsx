@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Send, Sparkles, User } from 'lucide-react'
+import { useSettings } from '../store/settings'
 
 interface Message {
   id: string
@@ -20,6 +21,7 @@ const suggestions = [
 ]
 
 export function Chat() {
+  const { openaiKey, openaiModel } = useSettings()
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
@@ -49,10 +51,10 @@ export function Chat() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${openaiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-4o',
+          model: openaiModel,
           messages: [
             { role: 'system', content: SYSTEM_CONTEXT },
             ...[...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
@@ -117,19 +119,39 @@ export function Chat() {
         <div ref={bottomRef} />
       </div>
 
-      {/* Suggestions (shown when only the greeting exists) */}
+      {/* Welcome card (shown before first message) */}
       {messages.length === 1 && (
-        <div className="px-6 pb-3 flex flex-wrap gap-2">
-          {suggestions.map(s => (
-            <button
-              key={s}
-              onClick={() => sendMessage(s)}
-              className="text-xs px-3 py-1.5 rounded-full bg-card border border-border text-muted-foreground
-                         hover:border-teal/40 hover:text-teal transition-colors"
-            >
-              {s}
-            </button>
-          ))}
+        <div className="px-6 pb-5 flex justify-center">
+          <div
+            className="w-full max-w-lg rounded-2xl border border-teal/20 px-6 py-5 flex flex-col items-center gap-4"
+            style={{
+              background: 'linear-gradient(135deg, rgba(0,194,181,0.07) 0%, rgba(8,11,22,0.6) 100%)',
+              backdropFilter: 'blur(12px)',
+              boxShadow: '0 0 40px rgba(0,194,181,0.08)',
+            }}
+          >
+            <div className="text-center">
+              <p className="text-sm font-semibold text-white">
+                Lex<span className="text-teal">Ai</span> Assistant
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Ask me anything or pick a suggestion below
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {suggestions.map(s => (
+                <button
+                  key={s}
+                  onClick={() => sendMessage(s)}
+                  className="text-xs px-3.5 py-1.5 rounded-full border border-teal/25 text-teal/80
+                             hover:border-teal hover:text-teal hover:bg-teal/10 transition-all duration-150"
+                  style={{ backdropFilter: 'blur(8px)', background: 'rgba(0,194,181,0.06)' }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
