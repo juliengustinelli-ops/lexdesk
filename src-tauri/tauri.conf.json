@@ -23,7 +23,12 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["https://api.github.com/**", "https://api.anthropic.com/**"]
+        "scope": [
+          "https://api.github.com/**",
+          "https://api.anthropic.com/**",
+          "https://api.openai.com/**",
+          "https://raw.githubusercontent.com/**"
+        ]
       },
       "dialog": {
         "all": true,
@@ -34,7 +39,18 @@
         "writeFile": true,
         "readFile": true,
         "scope": ["$DOWNLOAD/**", "$DESKTOP/**"]
+      },
+      "updater": {
+        "all": true
       }
+    },
+    "updater": {
+      "active": true,
+      "dialog": false,
+      "endpoints": [
+        "https://raw.githubusercontent.com/juliengustinelli-ops/lexdesk/main/latest.json"
+      ],
+      "pubkey": "REPLACE_WITH_YOUR_PUBLIC_KEY"
     },
     "bundle": {
       "active": true,
