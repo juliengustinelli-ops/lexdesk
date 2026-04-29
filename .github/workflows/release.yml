@@ -44,28 +44,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $tag = "${{ github.ref_name }}"
-          $version = $tag.TrimStart('v')
-          $date = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
 
-          $release = gh release view $tag --json assets --jq '.assets'
-          $msiUrl = gh release view $tag --json assets --jq '.assets[] | select(.name | endswith(".msi.zip")) | .url'
-          $sigContent = gh release view $tag --json assets --jq '.assets[] | select(.name | endswith(".msi.zip.sig")) | .url'
-
-          $sig = (Invoke-WebRequest -Uri $sigContent -Headers @{Authorization="Bearer $env:GITHUB_TOKEN"}).Content
-
-          $json = @{
-            version = $version
-            notes = "LexDesk $tag is now available."
-            pub_date = $date
-            platforms = @{
-              "windows-x86_64" = @{
-                signature = $sig
-                url = $msiUrl
-              }
-            }
-          } | ConvertTo-Json -Depth 5
-
-          $json | Out-File -FilePath latest.json -Encoding utf8
+          # Download the latest.json that tauri-action uploaded to the release
+          gh release download $tag --pattern "latest.json" --output latest.json --clobber
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
