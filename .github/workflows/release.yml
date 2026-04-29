@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: LexDesk ${{ github.ref_name }}
+          releaseBody: See the assets below to download and install this version of LexDesk.
+          releaseDraft: false
+          prerelease: false
+
+      - name: Update latest.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = $tag.TrimStart('v')
+          $date = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+
+          $release = gh release view $tag --json assets --jq '.assets'
+          $msiUrl = gh release view $tag --json assets --jq '.assets[] | select(.name | endswith(".msi.zip")) | .url'
+          $sigContent = gh release view $tag --json assets --jq '.assets[] | select(.name | endswith(".msi.zip.sig")) | .url'
+
+          $sig = (Invoke-WebRequest -Uri $sigContent -Headers @{Authorization="Bearer $env:GITHUB_TOKEN"}).Content
+
+          $json = @{
+            version = $version
+            notes = "LexDesk $tag is now available."
+            pub_date = $date
+            platforms = @{
+              "windows-x86_64" = @{
+                signature = $sig
+                url = $msiUrl
+              }
+            }
+          } | ConvertTo-Json -Depth 5
+
+          $json | Out-File -FilePath latest.json -Encoding utf8
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git commit -m "Update latest.json for $tag"
+          git push origin HEAD:main

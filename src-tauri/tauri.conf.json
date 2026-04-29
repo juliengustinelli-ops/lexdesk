@@ -50,7 +50,7 @@
       "endpoints": [
         "https://raw.githubusercontent.com/juliengustinelli-ops/lexdesk/main/latest.json"
       ],
-      "pubkey": "REPLACE_WITH_YOUR_PUBLIC_KEY"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYzMjQzNTE1RUE3RTY2MTkKUldRWlpuN3FGVFVrOHlxZ0VlaU1DU2VhWjJmWUMwLzJQYjNZeEhDVlRDWkJGV1dyODdBZUovSnEK"
     },
     "bundle": {
       "active": true,
