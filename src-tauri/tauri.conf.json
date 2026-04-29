@@ -39,9 +39,6 @@
         "writeFile": true,
         "readFile": true,
         "scope": ["$DOWNLOAD/**", "$DESKTOP/**"]
-      },
-      "updater": {
-        "all": true
       }
     },
     "updater": {
