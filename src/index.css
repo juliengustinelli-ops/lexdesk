@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* LexDesk Dark Theme — LexAi brand */
+    --background: 228 47% 5%;        /* #080b16 */
+    --foreground: 210 40% 95%;
+    --card: 228 47% 7%;              /* #0f1223 */
+    --card-foreground: 210 40% 95%;
+    --popover: 228 47% 7%;
+    --popover-foreground: 210 40% 95%;
+    --primary: 177 100% 38%;         /* #00c2b5 teal */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 228 30% 13%;
+    --secondary-foreground: 210 40% 95%;
+    --muted: 228 30% 13%;
+    --muted-foreground: 215 16% 55%;
+    --accent: 177 100% 38%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 228 30% 14%;
+    --input: 228 30% 14%;
+    --ring: 177 100% 38%;
+    --radius: 0.75rem;
+    --sidebar-width: 220px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    user-select: none;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { @apply bg-background; }
+::-webkit-scrollbar-thumb { @apply bg-white/10 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-white/20; }
+
+/* Selection */
+::selection { background: rgba(0,194,181,0.25); }
+
+/* Teal glow utility */
+.teal-glow {
+  box-shadow: 0 0 20px rgba(0, 194, 181, 0.25);
+}
+
+/* Slide in animation */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-in {
+  animation: slide-in 0.25s ease-out;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(15, 18, 35, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Gradient text */
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #00c2b5, #33cec3);
+}
