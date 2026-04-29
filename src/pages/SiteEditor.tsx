@@ -127,7 +127,7 @@ export function SiteEditor() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi Eric! Tell me what you'd like to change on the lexaib2b.com website and I'll update it for you.",
+      content: `Hi${useSettings.getState().userName ? ' ' + useSettings.getState().userName : ''}! Tell me what you'd like to change on the lexaib2b.com website and I'll update it for you.`,
     },
   ])
   const [input, setInput] = useState('')

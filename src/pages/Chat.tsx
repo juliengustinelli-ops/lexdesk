@@ -26,7 +26,7 @@ export function Chat() {
     {
       id: '0',
       role: 'assistant',
-      content: 'Hey Eric! I\'m your LexDesk assistant. Ask me anything about the website, brand, invoices, or marketing materials.',
+      content: `Hey${useSettings.getState().userName ? ' ' + useSettings.getState().userName : ''}! I'm your LexDesk assistant. Ask me anything about the website, brand, invoices, or marketing materials.`,
     },
   ])
   const [input, setInput] = useState('')
