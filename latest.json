@@ -1,11 +1,19 @@
 {
   "version": "1.0.0",
-  "notes": "Initial release",
-  "pub_date": "2026-04-29T00:00:00Z",
+  "notes": "See the assets below to download and install this version of LexDesk.",
+  "pub_date": "2026-04-29T22:26:44.821Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "",
-      "url": ""
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODE2QXVsMmFNclNPZENkQ1JIN2lYQnE0aitsWlZRYjNOUE9HM0VublRrWVNRaStsYi9jK1FOWWprZm5oOG9TTzdoWXk4MnVwWG9RNmVXdFVFRE95elEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTAxNTk5CWZpbGU6TGV4RGVza18xLjAuMF94NjRfZW4tVVMubXNpLnppcApFUzloVXRhVkNKVmJwUFlmVnFEN2gycSt4SEZtZUVBWE5sVFJ0cVRobVlmM1dnKzhLMFF3UlQ5VlBRb09kVHZ3ZmVrUjVuVWcvQ0s5NEhXWjU4V2RBUT09Cg==",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.1/LexDesk_1.0.0_x64_en-US.msi.zip"
+    },
+    "windows-x86_64-msi": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODE2QXVsMmFNclNPZENkQ1JIN2lYQnE0aitsWlZRYjNOUE9HM0VublRrWVNRaStsYi9jK1FOWWprZm5oOG9TTzdoWXk4MnVwWG9RNmVXdFVFRE95elEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTAxNTk5CWZpbGU6TGV4RGVza18xLjAuMF94NjRfZW4tVVMubXNpLnppcApFUzloVXRhVkNKVmJwUFlmVnFEN2gycSt4SEZtZUVBWE5sVFJ0cVRobVlmM1dnKzhLMFF3UlQ5VlBRb09kVHZ3ZmVrUjVuVWcvQ0s5NEhXWjU4V2RBUT09Cg==",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.1/LexDesk_1.0.0_x64_en-US.msi.zip"
+    },
+    "windows-x86_64-nsis": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODg5aGZMZmlYeTJLdFNVY212blZ5R216Zys5bW1lRkJOVWM4bWFYNFpPWFNLQ3pJVndjclNlUzhPZGdsdWNhNzhXMjhvRDc2UnZ0YVl2S29TWlFZZWcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTAxNTk5CWZpbGU6TGV4RGVza18xLjAuMF94NjQtc2V0dXAubnNpcy56aXAKd0dkdVJjaUM1ckw0L0xDNVNPVlJuaFFWUklwUnluVHJNUXRRTklpbjEyK1NudUc3d3hUb2lxSnRVdTRGanNCT004eHkwWmRYUjZ3aTVhV2tvTkxkQVE9PQo=",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.1/LexDesk_1.0.0_x64-setup.nsis.zip"
     }
   }
 }
