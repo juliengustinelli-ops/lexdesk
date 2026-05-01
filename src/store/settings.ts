@@ -32,11 +32,11 @@ export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
       userName:       '',
-      anthropicKey:   import.meta.env.VITE_ANTHROPIC_API_KEY || '',
+      anthropicKey:   '',
       anthropicModel: 'claude-sonnet-4-6',
-      openaiKey:      import.meta.env.VITE_OPENAI_API_KEY || '',
+      openaiKey:      '',
       openaiModel:    'gpt-4o',
-      githubToken:    import.meta.env.VITE_GITHUB_TOKEN || '',
+      githubToken:    '',
       setUserName:       (v) => set({ userName: v }),
       setAnthropicKey:   (v) => set({ anthropicKey: v }),
       setAnthropicModel: (v) => set({ anthropicModel: v }),

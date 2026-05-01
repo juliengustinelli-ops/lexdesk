@@ -106,10 +106,10 @@ export function Marketing() {
       <Section title="Website">
         <div className="grid grid-cols-2 gap-3">
           {[
-            { label: 'Live URL',   value: 'lexai.co' },
-            { label: 'GitHub Repo', value: 'lexai-repo' },
-            { label: 'Contact',    value: 'hello@lexai.co' },
+            { label: 'Live URL',    value: 'www.lexaib2b.com' },
             { label: 'Tagline',    value: 'Your AI Implementation Team' },
+            { label: 'Contact (Julien)', value: 'julien@lexaib2b.com' },
+            { label: 'Contact (Eric)',   value: 'eric@lexaib2b.com' },
           ].map(item => (
             <div key={item.label} className="p-3 rounded-lg bg-card border border-border">
               <p className="text-[10px] text-muted-foreground uppercase tracking-wide">{item.label}</p>
