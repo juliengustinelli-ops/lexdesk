@@ -19,6 +19,9 @@ async function getFileList(ghToken: string): Promise<string[]> {
     { headers: { Authorization: `Bearer ${ghToken}` } }
   )
   const data = await res.json()
+  if (!res.ok || !data.tree) {
+    throw new Error(data.message || 'Failed to fetch file list from GitHub')
+  }
   return (data.tree as { path: string; type: string }[])
     .filter(f => f.type === 'blob' && f.path.startsWith(SITE_PATH_PREFIX) && f.path.endsWith('.html'))
     .map(f => f.path.replace(`${SITE_PATH_PREFIX}/`, ''))
