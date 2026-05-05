@@ -36,7 +36,7 @@ export const useSettings = create<SettingsState>()(
       anthropicModel: 'claude-sonnet-4-6',
       openaiKey:      '',
       openaiModel:    'gpt-4o',
-      githubToken:    '',
+      githubToken:    import.meta.env.VITE_GITHUB_TOKEN ?? '',
       setUserName:       (v) => set({ userName: v }),
       setAnthropicKey:   (v) => set({ anthropicKey: v }),
       setAnthropicModel: (v) => set({ anthropicModel: v }),
