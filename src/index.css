@@ -52,6 +52,9 @@
 /* Selection */
 ::selection { background: rgba(0,194,181,0.25); }
 
+/* Allow text selection in chat message bubbles */
+.select-text { user-select: text !important; }
+
 /* Teal glow utility */
 .teal-glow {
   box-shadow: 0 0 20px rgba(0, 194, 181, 0.25);
