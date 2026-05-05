@@ -86,7 +86,7 @@ export function Chat() {
               </div>
             )}
             <div
-              className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap
+              className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap select-text cursor-text
                 ${msg.role === 'user'
                   ? 'bg-teal text-[#080b16] font-medium rounded-tr-sm'
                   : 'bg-card border border-border text-foreground rounded-tl-sm'

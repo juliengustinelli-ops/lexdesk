@@ -197,7 +197,7 @@ export function SiteEditor() {
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed select-text cursor-text ${
                 msg.role === 'user'
                   ? 'bg-teal text-[#080b16] font-medium rounded-br-sm'
                   : 'bg-card border border-border text-foreground rounded-bl-sm'

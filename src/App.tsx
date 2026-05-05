@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Globe,
@@ -29,8 +29,17 @@ const tabs: { id: Tab; label: string; icon: React.ElementType; description: stri
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('site')
+  const [appVersion, setAppVersion] = useState('...')
   const { userName } = useSettings()
   const displayName = userName.trim() || 'there'
+
+  useEffect(() => {
+    if ('__TAURI__' in window) {
+      import('@tauri-apps/api/app').then(({ getVersion }) => getVersion().then(setAppVersion))
+    } else {
+      setAppVersion('dev')
+    }
+  }, [])
 
   const currentTab = activeTab === 'settings'
     ? { label: 'Settings', description: 'API keys & model preferences' }
@@ -88,7 +97,7 @@ export default function App() {
             <span className="text-sm font-medium">Settings</span>
             {activeTab === 'settings' && <ChevronRight className="w-3 h-3 ml-auto text-teal opacity-70" />}
           </button>
-          <p className="text-[10px] text-muted-foreground mt-3 px-1">LexDesk v1.0</p>
+          <p className="text-[10px] text-muted-foreground mt-3 px-1">LexDesk v{appVersion}</p>
         </div>
       </aside>
 
