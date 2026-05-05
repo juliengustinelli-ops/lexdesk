@@ -61,7 +61,7 @@ async function commitFileChange(filePath: string, newContent: string, sha: strin
   }
 }
 
-async function askAI(userRequest: string, fileList: string[], aiKey: string, aiModel: string): Promise<{ file: string; instruction: string } | null> {
+async function askAI(userRequest: string, fileList: string[], aiKey: string, aiModel: string): Promise<{ file: string; instruction: string } | { error: string }> {
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -79,8 +79,11 @@ Available pages: ${fileList.join(', ')}
 The user will describe a change they want on the website. You must respond with ONLY valid JSON in this format:
 {"file": "filename.html", "instruction": "precise description of exactly what text/HTML to change and to what"}
 
-Pick the most relevant file. If the user says "homepage" or "main page", use index.html.
-If the request is unclear or not a website edit request, respond with: {"error": "explanation"}`,
+Guidelines:
+- If the user says "homepage" or "main page", use index.html.
+- If the user wants to change a page URL or slug (e.g. from /case-studies.html to /case-studies), find the most relevant HTML file and update all internal href links that point to the old URL to point to the new URL instead.
+- If the user wants to change link text, navigation items, or href values anywhere on the site, pick the file that contains those links (often index.html or a nav file) and give a precise instruction.
+- Only respond with {"error": "explanation"} if the request is completely unrelated to website editing.`,
         },
         { role: 'user', content: userRequest },
       ],
@@ -91,10 +94,9 @@ If the request is unclear or not a website edit request, respond with: {"error":
   const text = data.choices?.[0]?.message?.content?.trim()
   try {
     const parsed = JSON.parse(text)
-    if (parsed.error) return null
     return parsed
   } catch {
-    return null
+    return { error: 'Could not parse AI response. Please try rephrasing your request.' }
   }
 }
 
@@ -152,10 +154,10 @@ export function SiteEditor() {
       const fileList = await getFileList(githubToken)
       const plan = await askAI(text, fileList, openaiKey, openaiModel)
 
-      if (!plan) {
+      if ('error' in plan) {
         setMessages(prev => [...prev, {
           role: 'assistant',
-          content: "I couldn't figure out what to change. Could you be more specific? For example: \"Change the hero headline on the homepage to 'We Build AI That Grows Your Pipeline'\"",
+          content: plan.error,
         }])
         setLoading(false)
         return
