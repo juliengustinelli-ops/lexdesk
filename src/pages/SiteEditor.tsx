@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 import { Globe, Send, Loader2, CheckCircle2, XCircle } from 'lucide-react'
 import { useSettings } from '../store/settings'
 
-const REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER
-const REPO_NAME = import.meta.env.VITE_GITHUB_REPO
+const REPO_OWNER = 'juliengustinelli-ops'
+const REPO_NAME = 'LexAi'
 
 const SITE_PATH_PREFIX = '05-lex-ai-frontend/code'
 
