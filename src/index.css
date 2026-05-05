@@ -39,6 +39,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
+    -webkit-user-select: none;
     user-select: none;
   }
 }
@@ -53,7 +54,10 @@
 ::selection { background: rgba(0,194,181,0.25); }
 
 /* Allow text selection in chat message bubbles */
-.select-text { user-select: text !important; }
+.select-text {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
 
 /* Teal glow utility */
 .teal-glow {
