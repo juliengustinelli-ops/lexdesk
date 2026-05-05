@@ -21,7 +21,7 @@ const suggestions = [
 ]
 
 export function Chat() {
-  const { openaiKey, openaiModel } = useSettings()
+  const { anthropicKey, anthropicModel } = useSettings()
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
@@ -47,26 +47,25 @@ export function Chat() {
     setLoading(true)
 
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${openaiKey}`,
+          'x-api-key': anthropicKey,
+          'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: openaiModel,
-          messages: [
-            { role: 'system', content: SYSTEM_CONTEXT },
-            ...[...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
-          ],
-          max_tokens: 1024,
+          model: anthropicModel,
+          system: SYSTEM_CONTEXT,
+          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+          max_tokens: 4096,
         }),
       })
       const data = await response.json()
       const assistantMsg: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: data.choices?.[0]?.message?.content ?? 'Sorry, I could not get a response.',
+        content: data.content?.[0]?.text ?? 'Sorry, I could not get a response.',
       }
       setMessages(prev => [...prev, assistantMsg])
     } finally {
