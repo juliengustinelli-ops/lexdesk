@@ -1,35 +1,35 @@
 {
-  "version": "1.0.10",
+  "version": "1.0.11",
   "notes": "See the assets below to download and install this version of LexDesk.",
-  "pub_date": "2026-05-05T19:28:42.153Z",
+  "pub_date": "2026-05-05T19:38:18.701Z",
   "platforms": {
-    "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHlUdjcvalZ2VGdnQTVuNjRyVGo4OE5KeU14Qks0bkNqbW5RSWg3cC9wRlREUmlhaG1oQkxSbGJVbVhqMlAydUdyTHQwNURRdzhqU01hUGJWVFhuNlFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MTQ5CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CnV3SlpHU1NSWThuZ1ZzUzNsYjg0dXFrazNpZk52aEl2bjR3bmVUMzBoNlNocnU0TGxFM0NXMnRZUm1Na1Q0NnkxN2NTTTBUSCtoTHVOL3JHdlR2YUN3PT0K",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_aarch64.app.tar.gz"
-    },
-    "darwin-aarch64-app": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHlUdjcvalZ2VGdnQTVuNjRyVGo4OE5KeU14Qks0bkNqbW5RSWg3cC9wRlREUmlhaG1oQkxSbGJVbVhqMlAydUdyTHQwNURRdzhqU01hUGJWVFhuNlFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MTQ5CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CnV3SlpHU1NSWThuZ1ZzUzNsYjg0dXFrazNpZk52aEl2bjR3bmVUMzBoNlNocnU0TGxFM0NXMnRZUm1Na1Q0NnkxN2NTTTBUSCtoTHVOL3JHdlR2YUN3PT0K",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_aarch64.app.tar.gz"
-    },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODlyNlJDMi92NEpxRkxmNVB6RFhmQndZQ2J4VXgrcUhoeVZqdU93cHFaL2diSFIrKzd3aStpYjJuTDVMRnZ3bXNsY0cvbmFyVi9VNjNaSnpnblBUalFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MTc2CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CnR6dS8zd2x1QTNyWW5sZVVENmwzelJXSHhBeGZEZFI4MitJemp6OHFKSm5SL296elVMcU4xV3U3d1BsNkUrV284UU4yclhUblBwTGdGQ0svazg4N0RRPT0K",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_x64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODJlYlRZS2Y4VzFwWFI0V29GR2dQZGhzd1cva1hPZVZiWkJxUkVpRTY0bVJWV0F1VUFXMkNneGhrT1liTSsvdEM4NHVBRUh0U2JNOHN3YU42SzNuWUFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5NjU1CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CjFZTkl1SXQ3M1E1RzZxbHFLb0VPeGRyd0VLK2RrekF4RXdaNnBjeW85TmlpV2NSLys2eUhzWDN1aGhTekVWVlZPcytaNXJhTnRZcGkzWHkvL2I5RENBPT0K",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_x64.app.tar.gz"
     },
     "darwin-x86_64-app": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODlyNlJDMi92NEpxRkxmNVB6RFhmQndZQ2J4VXgrcUhoeVZqdU93cHFaL2diSFIrKzd3aStpYjJuTDVMRnZ3bXNsY0cvbmFyVi9VNjNaSnpnblBUalFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MTc2CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CnR6dS8zd2x1QTNyWW5sZVVENmwzelJXSHhBeGZEZFI4MitJemp6OHFKSm5SL296elVMcU4xV3U3d1BsNkUrV284UU4yclhUblBwTGdGQ0svazg4N0RRPT0K",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_x64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODJlYlRZS2Y4VzFwWFI0V29GR2dQZGhzd1cva1hPZVZiWkJxUkVpRTY0bVJWV0F1VUFXMkNneGhrT1liTSsvdEM4NHVBRUh0U2JNOHN3YU42SzNuWUFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5NjU1CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6CjFZTkl1SXQ3M1E1RzZxbHFLb0VPeGRyd0VLK2RrekF4RXdaNnBjeW85TmlpV2NSLys2eUhzWDN1aGhTekVWVlZPcytaNXJhTnRZcGkzWHkvL2I5RENBPT0K",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_x64.app.tar.gz"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHgxT3BoQjJ2S3hzbTJPMUpFakw3Q0NuK1h4eHo3QzY1bkNLSHJMQWlSbnJQYWNNZGdVQ2FsemlKdHowdGhkRnVKRzJHcG52aS9SYkdPdzYrY085aWdjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5Njg1CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6Clo2WjVGLzJ0ODRUWmRCaVZLNkx4dzVyNTU2QUJ0bEZyODl5Y0dOTWtxTVhvalRkSHVkQmxOS2tzckxjM2craWMxbXZBdHZHb1IrMzFkZTVSWWE1NER3PT0K",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_aarch64.app.tar.gz"
+    },
+    "darwin-aarch64-app": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHgxT3BoQjJ2S3hzbTJPMUpFakw3Q0NuK1h4eHo3QzY1bkNLSHJMQWlSbnJQYWNNZGdVQ2FsemlKdHowdGhkRnVKRzJHcG52aS9SYkdPdzYrY085aWdjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5Njg1CWZpbGU6TGV4RGVzay5hcHAudGFyLmd6Clo2WjVGLzJ0ODRUWmRCaVZLNkx4dzVyNTU2QUJ0bEZyODl5Y0dOTWtxTVhvalRkSHVkQmxOS2tzckxjM2craWMxbXZBdHZHb1IrMzFkZTVSWWE1NER3PT0K",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_aarch64.app.tar.gz"
     },
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHpkZWJLWm83VEYvT3E2RUVKa1NoZTBadjF6aW1OeUw5Nisxd2lqdnFOZWFnY3NOUVNIekptSFlsN0Vwa25zU2dBaDFENkF2WWNlcjUzVmhKcXBQcFF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MzE3CWZpbGU6TGV4RGVza18xLjAuMTBfeDY0X2VuLVVTLm1zaS56aXAKNTRWa2Y3eStOdmQ5YVhQV1R2VzJidDNtV0tRWXJvdndUWmlja0tTb2tKQ2krUW40VGhVTENYcFI5c01nUHJGU0wrMGhLZ2RmQng1YmtYcHc3aExWQWc9PQo=",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_1.0.10_x64_en-US.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODNQS2JCSURpNE4zYUc1T0QzM3RSVEFObGZhUk5kVUpUajhGOTNycXZrMDZzR2JRZjJkZm55anJxcUxxeEtxTGZFWlU4bXZ5YlIvYllQZi9paW9SbWc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5ODk0CWZpbGU6TGV4RGVza18xLjAuMTFfeDY0X2VuLVVTLm1zaS56aXAKT1l1ZmVuTmxWcG1TK1NLMEhFRTB5TmpUMkhiMG1XK09NcFV4MnUvRmxyb0Y1akZiVFlWNDJVcWpVVmZsZm9UWVdnakM2SUFwWHUvWm9FSlFZYVBHQnc9PQo=",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_1.0.11_x64_en-US.msi.zip"
     },
     "windows-x86_64-msi": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHpkZWJLWm83VEYvT3E2RUVKa1NoZTBadjF6aW1OeUw5Nisxd2lqdnFOZWFnY3NOUVNIekptSFlsN0Vwa25zU2dBaDFENkF2WWNlcjUzVmhKcXBQcFF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MzE3CWZpbGU6TGV4RGVza18xLjAuMTBfeDY0X2VuLVVTLm1zaS56aXAKNTRWa2Y3eStOdmQ5YVhQV1R2VzJidDNtV0tRWXJvdndUWmlja0tTb2tKQ2krUW40VGhVTENYcFI5c01nUHJGU0wrMGhLZ2RmQng1YmtYcHc3aExWQWc9PQo=",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_1.0.10_x64_en-US.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrODNQS2JCSURpNE4zYUc1T0QzM3RSVEFObGZhUk5kVUpUajhGOTNycXZrMDZzR2JRZjJkZm55anJxcUxxeEtxTGZFWlU4bXZ5YlIvYllQZi9paW9SbWc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5ODk0CWZpbGU6TGV4RGVza18xLjAuMTFfeDY0X2VuLVVTLm1zaS56aXAKT1l1ZmVuTmxWcG1TK1NLMEhFRTB5TmpUMkhiMG1XK09NcFV4MnUvRmxyb0Y1akZiVFlWNDJVcWpVVmZsZm9UWVdnakM2SUFwWHUvWm9FSlFZYVBHQnc9PQo=",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_1.0.11_x64_en-US.msi.zip"
     },
     "windows-x86_64-nsis": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHdQVzVwMFNTVS9URVU4V1BPdy9BL1F0eHZBWTNSSDIxK0JFT2lnSnZudU1TMFRpVXI2dnFTTlBtdVRJVUJBQSs2WWxscENQMnFHSXBXS3FORlZpSXdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5MzE3CWZpbGU6TGV4RGVza18xLjAuMTBfeDY0LXNldHVwLm5zaXMuemlwCkltSlVQOXkzamJpc2hMdEZ5elFZVmJodlBtcnlkdkVaTm9pblZBb2hnejZTa3NLM0M1cjZRcXVzbTQrTnh5bGV6UW5BR21sZG8vYUc3R0NHZ3BPWkNBPT0K",
-      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.10/LexDesk_1.0.10_x64-setup.nsis.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRWlpuN3FGVFVrOHpma0RGZmxQU0F4RzhTR1g4ai9lbkRGWU1XaFVUVjREeW5FNFIyYmV1d3dadFRSdnE5MGxCRlVQWHFuWEE3T3ZLVmZsRFNsWG1XRkJmQ3JJOVM4bkFzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4MDA5ODk0CWZpbGU6TGV4RGVza18xLjAuMTFfeDY0LXNldHVwLm5zaXMuemlwCjJZSHoySWF6Qm53bHN0UmJwRVY2VDVXejVjS096d1pxL2VzNUJsUkl5bE4vbHYyVC9RcVlsRjB2dlJLSy9oTXE3eGNpdHlSYVJPc09ZVUF3YTNuUER3PT0K",
+      "url": "https://github.com/juliengustinelli-ops/lexdesk/releases/download/v1.0.11/LexDesk_1.0.11_x64-setup.nsis.zip"
     }
   }
 }
