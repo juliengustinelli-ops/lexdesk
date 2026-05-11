@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { Send, Sparkles, User } from 'lucide-react'
 import { useSettings } from '../store/settings'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   id: string
@@ -110,13 +112,36 @@ export function Chat() {
               </div>
             )}
             <div
-              className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap select-text cursor-text
+              className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed select-text cursor-text
                 ${msg.role === 'user'
-                  ? 'bg-teal text-[#080b16] font-medium rounded-tr-sm'
+                  ? 'bg-teal text-[#080b16] font-medium rounded-tr-sm whitespace-pre-wrap'
                   : 'bg-card border border-border text-foreground rounded-tl-sm'
                 }`}
             >
-              {msg.content}
+              {msg.role === 'user' ? msg.content : (
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                    ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
+                    ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
+                    li: ({ children }) => <li>{children}</li>,
+                    strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                    em: ({ children }) => <em className="italic">{children}</em>,
+                    h1: ({ children }) => <h1 className="text-base font-bold mb-2 text-white">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-sm font-bold mb-2 text-white">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-white">{children}</h3>,
+                    code: ({ inline, children }: { inline?: boolean; children?: React.ReactNode }) => inline
+                      ? <code className="px-1.5 py-0.5 rounded bg-white/10 font-mono text-xs text-teal">{children}</code>
+                      : <pre className="my-2 p-3 rounded-lg bg-black/40 font-mono text-xs overflow-x-auto text-teal/90"><code>{children}</code></pre>,
+                    a: ({ href, children }) => <a href={href} className="text-teal underline hover:opacity-80">{children}</a>,
+                    blockquote: ({ children }) => <blockquote className="border-l-2 border-teal/40 pl-3 italic text-muted-foreground my-2">{children}</blockquote>,
+                    hr: () => <hr className="border-border my-3" />,
+                  }}
+                >
+                  {msg.content}
+                </ReactMarkdown>
+              )}
             </div>
             {msg.role === 'user' && (
               <div className="w-7 h-7 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0 mt-0.5">
