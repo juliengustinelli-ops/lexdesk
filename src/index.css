@@ -39,8 +39,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
-    -webkit-user-select: none;
-    user-select: none;
   }
 }
 
