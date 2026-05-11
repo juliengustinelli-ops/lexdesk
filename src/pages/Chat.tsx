@@ -1,14 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
-import { Send, Sparkles, User } from 'lucide-react'
+import { Send, Sparkles, User, Trash2 } from 'lucide-react'
 import { useSettings } from '../store/settings'
+import { useChatStore } from '../store/chat'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-}
 
 const SYSTEM_CONTEXT = `You are the LexDesk assistant — a helpful AI built into the LexDesk desktop app for LexAi.
 You are a general-purpose assistant, like Claude, and can help with anything the user asks — writing, research, brainstorming, coding, questions, conversation, or anything else.
@@ -17,20 +12,14 @@ Be natural, conversational, and helpful — just like talking to Claude directly
 
 const suggestions = [
   'How do I update the hero headline?',
-  'What are LexAi\'s brand colors?',
+  "What are LexAi's brand colors?",
   'Generate invoice copy for a $2,500 project',
   'Write a one-pager intro for a new client',
 ]
 
 export function Chat() {
   const { anthropicKey, anthropicModel } = useSettings()
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '0',
-      role: 'assistant',
-      content: `Hey${useSettings.getState().userName ? ' ' + useSettings.getState().userName : ''}! I'm your LexDesk assistant. Ask me anything about the website, brand, invoices, or marketing materials.`,
-    },
-  ])
+  const { messages, setMessages, clearMessages } = useChatStore()
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -43,13 +32,13 @@ export function Chat() {
     const content = text || input.trim()
     if (!content || loading) return
 
-    const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content }
+    const userMsg = { id: crypto.randomUUID(), role: 'user' as const, content }
     setMessages(prev => [...prev, userMsg])
     setInput('')
     setLoading(true)
 
     const assistantId = crypto.randomUUID()
-    setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+    setMessages(prev => [...prev, { id: assistantId, role: 'assistant' as const, content: '' }])
 
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -213,7 +202,7 @@ export function Chat() {
             onKeyDown={e => {
               if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() }
             }}
-            placeholder="Ask anything about LexAi..."
+            placeholder="Ask anything..."
             rows={1}
             className="flex-1 px-4 py-3 rounded-xl bg-card border border-border text-sm text-foreground
                        placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2
@@ -225,6 +214,14 @@ export function Chat() {
             className="p-3 rounded-xl bg-teal text-[#080b16] disabled:opacity-40 hover:opacity-90 transition-opacity flex-shrink-0"
           >
             <Send className="w-4 h-4" />
+          </button>
+          <button
+            onClick={clearMessages}
+            disabled={loading || messages.length <= 1}
+            title="Clear chat"
+            className="p-3 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:border-teal/40 disabled:opacity-30 transition-all flex-shrink-0"
+          >
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
         <p className="text-[10px] text-muted-foreground/50 mt-2 text-center">
