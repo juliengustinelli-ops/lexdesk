@@ -46,6 +46,9 @@ export function Chat() {
     setInput('')
     setLoading(true)
 
+    const assistantId = crypto.randomUUID()
+    setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -59,15 +62,37 @@ export function Chat() {
           system: SYSTEM_CONTEXT,
           messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
           max_tokens: 4096,
+          stream: true,
         }),
       })
-      const data = await response.json()
-      const assistantMsg: Message = {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        content: data.content?.[0]?.text ?? 'Sorry, I could not get a response.',
+
+      const reader = response.body!.getReader()
+      const decoder = new TextDecoder()
+      let accumulated = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        for (const line of chunk.split('\n')) {
+          if (!line.startsWith('data: ')) continue
+          const raw = line.slice(6).trim()
+          if (raw === '[DONE]') break
+          try {
+            const parsed = JSON.parse(raw)
+            if (parsed.type === 'content_block_delta' && parsed.delta?.type === 'text_delta') {
+              accumulated += parsed.delta.text
+              setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: accumulated } : m))
+            }
+          } catch { /* skip malformed lines */ }
+        }
       }
-      setMessages(prev => [...prev, assistantMsg])
+
+      if (!accumulated) {
+        setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: 'Sorry, I could not get a response.' } : m))
+      }
+    } catch {
+      setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: 'Sorry, something went wrong.' } : m))
     } finally {
       setLoading(false)
     }
