@@ -4,6 +4,16 @@ import { useSettings, ANTHROPIC_MODELS, OPENAI_MODELS } from '../store/settings'
 
 const isTauri = '__TAURI__' in window
 
+type UpdatePhase =
+  | { phase: 'idle' }
+  | { phase: 'checking' }
+  | { phase: 'available'; version: string }
+  | { phase: 'uptodate' }
+  | { phase: 'downloading' }
+  | { phase: 'installing' }
+  | { phase: 'relaunching' }
+  | { phase: 'error'; message: string }
+
 async function checkForUpdate(): Promise<{ hasUpdate: boolean; version?: string; body?: string } | null> {
   try {
     const { checkUpdate } = await import('@tauri-apps/api/updater')
@@ -14,10 +24,17 @@ async function checkForUpdate(): Promise<{ hasUpdate: boolean; version?: string;
   }
 }
 
-async function installUpdate() {
+async function runInstallUpdate(onStatus: (s: UpdatePhase) => void) {
   const { installUpdate, onUpdaterEvent } = await import('@tauri-apps/api/updater')
   const { relaunch } = await import('@tauri-apps/api/process')
-  await onUpdaterEvent(() => {})
+
+  await onUpdaterEvent(({ error, status }) => {
+    if (error) onStatus({ phase: 'error', message: error })
+    else if (status === 'DOWNLOADED') onStatus({ phase: 'installing' })
+    else if (status === 'DONE') onStatus({ phase: 'relaunching' })
+  })
+
+  onStatus({ phase: 'downloading' })
   await installUpdate()
   await relaunch()
 }
@@ -81,9 +98,7 @@ function ModelSelect({ label, value, onChange, options }: {
 export function Settings() {
   const s = useSettings()
   const [saved, setSaved] = useState(false)
-  const [updateStatus, setUpdateStatus] = useState<'idle' | 'checking' | 'available' | 'uptodate' | 'error'>('idle')
-  const [updateVersion, setUpdateVersion] = useState('')
-  const [installing, setInstalling] = useState(false)
+  const [update, setUpdate] = useState<UpdatePhase>({ phase: 'idle' })
 
   const handleSave = () => {
     setSaved(true)
@@ -91,21 +106,27 @@ export function Settings() {
   }
 
   const handleCheckUpdate = async () => {
-    setUpdateStatus('checking')
-    const result = await checkForUpdate()
-    if (!result) {
-      setUpdateStatus('error')
-    } else if (result.hasUpdate && result.version) {
-      setUpdateVersion(result.version)
-      setUpdateStatus('available')
-    } else {
-      setUpdateStatus('uptodate')
+    setUpdate({ phase: 'checking' })
+    try {
+      const result = await checkForUpdate()
+      if (!result) {
+        setUpdate({ phase: 'error', message: 'Could not reach update server.' })
+      } else if (result.hasUpdate && result.version) {
+        setUpdate({ phase: 'available', version: result.version })
+      } else {
+        setUpdate({ phase: 'uptodate' })
+      }
+    } catch (e: any) {
+      setUpdate({ phase: 'error', message: e?.message ?? 'Unknown error' })
     }
   }
 
   const handleInstall = async () => {
-    setInstalling(true)
-    await installUpdate()
+    try {
+      await runInstallUpdate(setUpdate)
+    } catch (e: any) {
+      setUpdate({ phase: 'error', message: e?.message ?? 'Install failed — try downloading manually.' })
+    }
   }
 
   return (
@@ -195,36 +216,57 @@ export function Settings() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleCheckUpdate}
-              disabled={updateStatus === 'checking' || installing}
+              disabled={['checking', 'downloading', 'installing', 'relaunching'].includes(update.phase)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm
                          text-muted-foreground hover:text-foreground hover:border-teal/40 transition-all disabled:opacity-40"
             >
-              <RefreshCw className={`w-4 h-4 ${updateStatus === 'checking' ? 'animate-spin' : ''}`} />
-              {updateStatus === 'checking' ? 'Checking...' : 'Check for Updates'}
+              <RefreshCw className={`w-4 h-4 ${update.phase === 'checking' ? 'animate-spin' : ''}`} />
+              {update.phase === 'checking' ? 'Checking...' : 'Check for Updates'}
             </button>
 
-            {updateStatus === 'available' && (
+            {update.phase === 'available' && (
               <button
                 onClick={handleInstall}
-                disabled={installing}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-teal text-[#080b16]
-                           font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
+                           font-semibold text-sm hover:opacity-90 transition-opacity"
               >
                 <Download className="w-4 h-4" />
-                {installing ? 'Installing...' : `Install v${updateVersion}`}
+                Install v{update.version}
               </button>
             )}
           </div>
 
-          {updateStatus === 'uptodate' && (
+          {update.phase === 'uptodate' && (
             <p className="flex items-center gap-1.5 text-xs text-teal">
               <CheckCircle2 className="w-3.5 h-3.5" /> You're on the latest version
             </p>
           )}
-          {updateStatus === 'error' && (
-            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <AlertCircle className="w-3.5 h-3.5" /> Could not check for updates
+          {update.phase === 'downloading' && (
+            <p className="flex items-center gap-1.5 text-xs text-teal">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Downloading update...
             </p>
+          )}
+          {update.phase === 'installing' && (
+            <div className="space-y-1">
+              <p className="flex items-center gap-1.5 text-xs text-teal">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Installing...
+              </p>
+              <p className="text-xs text-muted-foreground pl-5">
+                If nothing happens, check your taskbar for a Windows security prompt and click Allow.
+              </p>
+            </div>
+          )}
+          {update.phase === 'relaunching' && (
+            <p className="flex items-center gap-1.5 text-xs text-teal">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Restarting app...
+            </p>
+          )}
+          {update.phase === 'error' && (
+            <div className="space-y-1">
+              <p className="flex items-center gap-1.5 text-xs text-destructive">
+                <AlertCircle className="w-3.5 h-3.5" /> {update.message}
+              </p>
+            </div>
           )}
         </section>
       )}
